@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="<%= baseurl() %>css/style.css">
+        <link rel="stylesheet" href="<%= baseurl() %>css/component.css">
+        <link rel="stylesheet" href="<%= baseurl() %>css/mystyle.css">
+        <link rel="stylesheet" href="<%= baseurl() %>plugin/timer/css/timer.css">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+        <title>Kadence Absensi</title>
+    </head>
+    <body>
+        <div class="blur" style="z-index: 1001; display: none" onclick="closePopup()"></div>
+        <div class="popup">
+            <div class="close-onbox" onClick="closePopup()">
+                <div style="width: 15px; height: 15px;">
+                    <img src="<%= baseurl() %>img/cross-thick.png">
+                </div>
+            </div>
+            <div class="popupLoader full-length" style="display: none;">
+                <table class="size-std full-length" cellspacing="10" cellpadding="10" style="height: 100%;">
+                    <tr>
+                        <td style="text-align: center; border-bottom: 1px solid #dfe8f1;">
+                            <img src="<%= baseurl() %>img/loader.gif" alt="">
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="popupContent full-length">
+    
+            </div>
+        </div>
+        <nav class="navbar navbar-dark bg-dark">
+            <a class="navbar-brand" href="/absen/">
+                <img src="http://survey.kadence.co.id:3004/img/Logo_Clear.png" width="30" height="30" class="d-inline-block align-top" alt="">
+                Kadence Indonesia
+            </a>
+            <div class="top-icon-menu desk delay">
+                <ul>
+                    <li class="size-std option-click" onClick="clickToggle(profile)"><img src="<%= baseurl() %>img/profile.png">&nbsp;&nbsp;<%= session[0].Email %></li>
+                </ul>
+            </div>
+            <div class="option-box option-menu shadow half size-std desk" id="profile" style="display: none;">
+                <ul class="nopad">
+                    <li><a href="">Edit Password</a></li>
+                    <li><a href="<%=  baseurl()%>absen/admin">Export</a></li>
+                    <li style="border-top: 1px solid #f3eeee"><a href="/absen/logout">Logout</a></li>
+                </ul>
+            </div>
+        </nav>
+        <div class="container">
+            <form id="frm-export">
+                <table class="full-length size-std basic-tables unbordered" style="border-right:1px solid #dfe8f1" cellpadding="8" cellspacing="8">
+                    <tr>
+                        <td style="text-align: right; width: 40%;">*Date From</td>
+                        <td>
+                            <input type="date" name="date_from" class="frm-std size-std" style="border-radius: 0;" required="">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="text-align: right; width: 40%;">*Date To</td>
+                        <td>
+                            <input type="date" name="date_to" class="frm-std size-std" style="border-radius: 0;" required="">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" align="center"><input type="submit" value="Export File" class="btn btn-primary"></td>
+                    </tr>
+                </table>
+            </form>	
+        </div>
+    </body>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script>
+        $("#frm-export").submit(function() {
+            var data = $(this).serialize();
+            $.ajax({
+                type: "POST",
+                url: "<%= baseurl() %>absen/admin/export",
+                data: data,
+                cache: false,
+                beforeSend: function(){
+                    $('.blur').show()
+                    $('.popup').show()
+                    $('.popupLoader').show()
+                },success: function(read){
+                    $('.popupLoader').hide()
+                    $('.popupContent').html(read)
+                }
+            })
+            return false;
+        })
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/moment.js/2.0.0/moment.min.js"></script>
+    <script src="<%= baseurl() %>plugin/timer/js/script.js"></script>
+    <script src="<%= baseurl() %>js/animate.js"></script>
+    
+</html>

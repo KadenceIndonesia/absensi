@@ -1,0 +1,184 @@
+html{
+    min-height: 100%;
+    height: 100%;
+}
+body{
+    margin: 0;
+    background: #ffffff;
+    font-family: "Helvetica Neue",Roboto,Arial,"Droid Sans",sans-serif;
+    font-size: 1em;
+    height: 100%;
+}
+
+*{
+    box-sizing: border-box;
+}
+
+li{
+    list-style-type: none;
+}
+
+.wrapper{
+    position: relative;;
+    left: 0;
+    right: 0;
+    margin: auto;
+    width: 100%;
+    height: 100%;
+}
+.fixMiddle{
+    position: fixed;
+    top:0; left: 0; right: 0; bottom: 0;
+    margin: auto;
+}
+
+.login-wrap{
+    position: relative;
+    top:0; left: 0; right: 0; bottom: 0;
+    margin: auto;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to right, #0094D8, #00AFA2);
+    -webkit-background: linear-gradient(to right, #0094D8, #00AFA2);
+    -o-background: linear-gradient(to right, #0094D8, #00AFA2);
+    -moz-background: linear-gradient(to right, #0094D8, #00AFA2);
+}
+.loginBoxsize{
+    width: 21%;
+    height: 55%;
+    border-radius: 8px;
+    background-color: #ffffff;
+}
+.loginBoxsize img{
+    width: 35%;
+    margin: 0 10px;
+}
+.headLogin,
+.bodyLogin,
+.bottomLogin{
+    width: 100%;
+    text-align: center;
+}
+.headLogin{
+    height: 20%;
+    padding: 10%;
+}
+.bodyLogin{
+    height: 60%;
+}
+.bodyLogin input[type="text"],
+.bodyLogin input[type="email"],
+.bodyLogin input[type="password"],
+.bodyLogin select,
+.bodyLogin input[type="submit"]{
+    width: 60%;
+}
+.bodyLogin table{
+    width: 100%;
+    height: 100%;
+}
+.bottomLogin{
+    height: 20%;
+}
+
+
+@media screen and (max-width: 650px){
+    .containt{
+        width: 94%;
+    }
+    select{
+        width: 94%;
+    }
+    .loginBoxsize{
+        width: 90%;
+        height: 65%;
+    }
+    .bodyLogin input[type="text"],
+    .bodyLogin input[type="password"],
+    .bodyLogin input[type="submit"]{
+        width: 80%;
+    }
+}
+
+
+.top-icon-menu{
+    position: absolute;
+    right: 30px;
+    top: 10%;
+    bottom: 10%;
+    height: 80%;
+}
+
+/*  */
+.top-icon-menu ul li img{height: 20px; vertical-align: middle;}
+.top-icon-menu ul{ margin:0;}
+.top-icon-menu ul li{float: left; margin: 3px 0; padding: 8px; color: #ffffff; cursor: pointer;}
+.top-icon-menu ul li p,
+.top-icon-menu ul li a,
+.top-icon-menu ul li span,
+.top-icon-menu ul li b{color: #ffffff;}
+.top-icon-menu ul li:hover{background: #4e4e4e;}
+.top-icon-menu ul li.quicksearch:hover{background: transparent;}
+
+.option-box{position: absolute; top:100%;  right: 30px; margin: auto; width: 200px; padding: 0; background: #ffffff; border: 1px solid #d6d6d6; z-index: 999;}
+  .option-box ul{padding-left: 0; width: 100%; overflow: hidden;}
+  .option-box ul li{ padding: 8px 15px; color: #959a9c; width: 100%;}
+  .option-box ul li a{color: #959a9c}
+  .option-box ul li:hover{background: #f3eeee;}
+/*  */
+
+.size-std{font-size: 12px;}
+  .size-cute{font-size: 10px; font-family: "MONTSERRATL";}
+  .size-note{font-style: italic; font-size: 0.9em; font-family: "MONTSERRATL";}
+  .size-head1{font-size: 3em; font-family: "MONTSERRATB"}
+  .size-head2{font-size: 2.4em; font-family: "MONTSERRAT"}
+  .size-head3{font-size: 2em; font-family: "MONTSERRAT"}
+  .size-head4{font-size: 1.5em;}
+
+
+    @media screen and (max-width: 1600px){      
+    .size-std{font-size: 9px;}    
+    .size-cute{font-size: 8px}
+    .size-note{font-size: 7px}
+    .size-head1{font-size: 32px;}
+    .size-head2{font-size: 26px;}
+    .size-head3{font-size: 16px;}
+    .size-head4{font-size: 13px;}
+  }
+  @media screen and (max-width: 1024px){
+    .size-std{font-size: 1em;}
+    .size-cute{font-size: .6em;}
+    .size-note{font-size: .4em}
+    .size-head1{font-size: 3em;}
+    .size-head2{font-size: 2.4em;}
+    .size-head3{font-size: 2em;}
+    .size-head4{font-size: 1.5em;}
+  }
+  @media screen and (max-width: 650px){
+    .size-std{font-size: .85em;}
+    .size-cute{font-size: 2.2vw;}
+    .size-note{font-size: 1.1vw}
+    .size-head1{font-size: 2.8em;}
+    .size-head2{font-size: 2em;}
+    .size-head3{font-size: 1.7em;}
+    .size-head4{font-size: 1.4em;}
+  }
+
+ul.nopad{
+    -webkit-margin-before: 0;
+    -webkit-margin-after: 0;
+    -webkit-margin-start: 0;
+    -webkit-margin-end: 0;
+    -webkit-padding-start: 0;
+}
+
+p.nopad,
+h1.nopad,
+h2.nopad,
+h3.nopad{
+    -webkit-margin-before: 0;
+    -webkit-margin-after: 0;
+    -webkit-margin-start: 0;
+    -webkit-margin-end: 0;
+    -webkit-padding-start: 0;
+}

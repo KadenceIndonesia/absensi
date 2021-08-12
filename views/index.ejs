@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="<%= baseurl() %>css/style.css">
+        <link rel="stylesheet" href="<%= baseurl() %>css/component.css">
+        <link rel="stylesheet" href="<%= baseurl() %>plugin/timer/css/style.css">
+        <link rel="stylesheet" href="<%= baseurl() %>plugin/timer/css/timer.css">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+        <style>
+            .countup {
+              text-align: center;
+              margin-bottom: 20px;
+            }
+            .countup .timeel {
+              display: inline-block;
+              padding: 10px;
+              background: #151515;
+              margin: 0;
+              color: white;
+              min-width: 2.6rem;
+              margin-left: 13px;
+              border-radius: 10px 0 0 10px;
+            }
+            .countup span[class*="timeRef"] {
+              border-radius: 0 10px 10px 0;
+              margin-left: 0;
+              background: #e8c152;
+              color: black;
+            }
+            </style>
+            
+        <title>Kadence Absensi</title>
+    </head>
+    <body>
+        <nav class="navbar navbar-dark bg-dark">
+            <a class="navbar-brand" href="/absen/">
+                <img src="http://survey.kadence.co.id:3004/img/Logo_Clear.png" width="30" height="30" class="d-inline-block align-top" alt="">
+                Kadence Indonesia
+            </a>
+            <% if(data[0].clockin != '00:00:00' && data[0].clockout == '00:00:00') { %>
+                
+            <% } %>
+            <div>
+            </div>
+            <div class="top-icon-menu desk delay">
+                <ul>
+                    <li class="size-std option-click" onClick="clickToggle(profile)"><img src="<%= baseurl() %>img/profile.png">&nbsp;&nbsp;<%= session[0].Email %></li>
+                </ul>
+                
+            </div>
+            <div class="option-box option-menu shadow half size-std desk" id="profile" style="display: none;">
+                <ul class="nopad">
+                    <li><a href="/absen/editpassword">Edit Password</a></li>
+                    <li><a href="<%=  baseurl()%>absen/admin">Export</a></li>
+                    <li style="border-top: 1px solid #f3eeee"><a href="/absen/logout">Logout</a></li>
+                </ul>
+            </div>
+            <!-- <a href="/absen/logout" class="btn btn-info" style="color: #ffffff;">Logout</a> -->
+        </nav>
+        <div class="container">
+            <div id="clock" class="light">
+                <b><%= moment(data[0].date).format("YYYY-MMMM-DD") %></b>
+                <div class="display">
+                    <div class="weekdays"></div>
+                    <div class="ampm"></div>
+                    <div class="alarm"></div>
+                    <div class="digits"></div>
+                </div>
+            </div>
+            <div class="button-holder">
+                <!-- <a class="button">Switch Theme</a> -->
+                <% if (data[0].clockin == '00:00:00' && data[0].clockout == '00:00:00'){ %>
+                        <form action="/absen/clockIn/" method="POST">
+                            <div class="col" style="width: 30%;position: absolute;left: 0;right: 0;margin: auto;">
+                                <div style="width: 100%; float: left;">
+                                    <p style="text-align: left;">
+                                        Pilih lokasi anda bekerja saat ini
+                                    </p>
+                                    <div class="radiotype1">
+                                        <input type="radio" id="radio01" name="worktype" value="WFH" required>
+                                        <label for="radio01" id="chartline"><span></span>Rumah</label>
+                                    </div>
+                                    <div class="radiotype1">
+                                        <input type="radio" id="radio02" name="worktype" value="WFO" required>
+                                        <label for="radio02" id="chartline"><span></span>Kantor</label>
+                                    </div>
+                                </div>
+                                <input type="hidden" name="ipInput" id="ipInput" readonly/>
+                                <button type="submit" class="btn btn-primary btnclockin" disabled>Clock In</button>
+                            </div>
+                        </form>
+                <% }else if(data[0].clockin != '00:00:00' && data[0].clockout == '00:00:00'){ %>
+                        <div>
+                            Your Clock in on <%= data[0].clockin %>
+                        </div>
+                        <div>
+                            <div class="countup" id="countup1">
+                                <span class="timeel hours">00</span>
+                                <span class="timeel timeRefHours">hours</span>
+                                <span class="timeel minutes">00</span>
+                                <span class="timeel timeRefMinutes">minutes</span>
+                                <span class="timeel seconds">00</span>
+                                <span class="timeel timeRefSeconds">seconds</span>
+                            </div>
+                        </div>
+                        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#clockoutalert">
+                            Clock Out
+                        </button>
+                        <div class="modal fade" id="clockoutalert" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                <h5 class="modal-title" id="clockoutalertLabel">Clock Out</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                                </div>
+                                <div class="modal-body">
+                                Are you sure ?
+                                </div>
+                                <div class="modal-footer">
+                                <form action="/absen/clockOut/" method="POST">
+                                        <button type="reset" class="btn btn-secondary" data-dismiss="modal">No</button>
+                                        <button type="submit" class="btn btn-primary">Yes</button>
+                                </form>
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+                <% }else{%>
+                    <div>
+                        Your Clock in on <b><%= data[0].clockin %></b> 
+                    </div>
+                    <div>
+                        Your Clock out on <b><%= data[0].clockout %></b>
+                    </div>
+                    <div>
+                        Your Today Work Time :
+                    </div>
+                    <div>
+                        <div class="countup" id="countend">
+                            <span class="timeel hours">00</span>
+                            <span class="timeel timeRefHours">hours</span>
+                            <span class="timeel minutes">00</span>
+                            <span class="timeel timeRefMinutes">minutes</span>
+                            <span class="timeel seconds">00</span>
+                            <span class="timeel timeRefSeconds">seconds</span>
+                        </div>
+                    </div>  
+                <% }%>
+            </div>
+        </div>
+    </body>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script>
+        $.getJSON("https://api.ipify.org?format=json", function(data) {
+            $("#ipInput").val(data.ip);
+        })
+        var ipinput = $('#ipInput').val()
+        function enableButton(){
+            $('.btnclockin').removeAttr("disabled");
+        }
+        $(document).ready(function(){
+            setInterval(enableButton,3000)
+        })
+    </script>
+    <script>
+        window.onload = function() {
+            // Month Day, Year Hour:Minute:Second, id-of-element-container
+            var tanggal = "<%=data[0].date%>";
+            var splittanggal = tanggal.split(" ");
+            var times = "<%=data[0].clockin%>";
+            var strtanggal = splittanggal[1]+" "+splittanggal[2]+", "+times;
+            if ('<%=data[0].clockout%>'=='00:00:00'){
+                countUpFromTime(strtanggal, 'countup1');
+            }else{
+                countend(strtanggal, 'countend');
+            }
+        };
+        function countUpFromTime(countFrom, id) {
+            countFrom = new Date(countFrom).getTime();
+            var now = new Date(),
+                countFrom = new Date(countFrom),
+                timeDifference = (now - countFrom);
+            
+            var secondsInADay = 60 * 60 * 1000 * 24,
+                secondsInAHour = 60 * 60 * 1000;
+                
+            days = Math.floor(timeDifference / (secondsInADay) * 1);
+            hours = Math.floor((timeDifference % (secondsInADay)) / (secondsInAHour) * 1);
+            mins = Math.floor(((timeDifference % (secondsInADay)) % (secondsInAHour)) / (60 * 1000) * 1);
+            secs = Math.floor((((timeDifference % (secondsInADay)) % (secondsInAHour)) % (60 * 1000)) / 1000 * 1);
+
+            var idEl = document.getElementById(id);
+            //idEl.getElementsByClassName('days')[0].innerHTML = days;
+            idEl.getElementsByClassName('hours')[0].innerHTML = hours;
+            idEl.getElementsByClassName('minutes')[0].innerHTML = mins;
+            idEl.getElementsByClassName('seconds')[0].innerHTML = secs;
+
+            clearTimeout(countUpFromTime.interval);
+            countUpFromTime.interval = setTimeout(function(){ countUpFromTime(countFrom, id); }, 1000);
+        }
+
+        function countend(countFrom, id) {
+            countFrom = new Date(countFrom).getTime();
+            var now = new Date(),
+                countFrom = new Date(countFrom),
+                timeDifference = (now - countFrom);
+            
+            var secondsInADay = 60 * 60 * 1000 * 24,
+                secondsInAHour = 60 * 60 * 1000;
+                
+            days = Math.floor(timeDifference / (secondsInADay) * 1);
+            hours = Math.floor((timeDifference % (secondsInADay)) / (secondsInAHour) * 1);
+            mins = Math.floor(((timeDifference % (secondsInADay)) % (secondsInAHour)) / (60 * 1000) * 1);
+            secs = Math.floor((((timeDifference % (secondsInADay)) % (secondsInAHour)) % (60 * 1000)) / 1000 * 1);
+
+            var idEl = document.getElementById(id);
+            //idEl.getElementsByClassName('days')[0].innerHTML = days;
+            idEl.getElementsByClassName('hours')[0].innerHTML = hours;
+            idEl.getElementsByClassName('minutes')[0].innerHTML = mins;
+            idEl.getElementsByClassName('seconds')[0].innerHTML = secs;
+
+            //clearTimeout(countUpFromTime.interval);
+            //countUpFromTime.interval = setTimeout(function(){ countUpFromTime(countFrom, id); }, 1000);
+        } 
+    </script> 
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/moment.js/2.0.0/moment.min.js"></script>
+    <script src="<%= baseurl() %>plugin/timer/js/script.js"></script>
+    <script src="<%= baseurl() %>js/animate.js"></script>
+</html>
