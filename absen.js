@@ -24,7 +24,7 @@ app.use(session({
     resave: false,
     saveUninitialized: false,
     cookie: {
-        expires: 6000000000000
+        expires: 600000
     },
     name: "Absen"
 }));
