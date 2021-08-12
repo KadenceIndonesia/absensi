@@ -7,6 +7,9 @@ Router.get('/',Controller.getIndex);
 Router.get('/login',Controller.getLogin);
 Router.post('/login',Controller.postLogin);
 
+Router.get('/suggestion-box',Controller.getSuggestionBox);
+Router.post('/suggestion-box',Controller.postSuggestionBox);
+
 Router.get('/logout',Controller.getLogout);
 
 Router.get('/register',Controller.getRegister);

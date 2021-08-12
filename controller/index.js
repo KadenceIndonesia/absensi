@@ -5,11 +5,6 @@ const CryptoJs = require("crypto-js");
 const Cryptr = require("cryptr");
 const cryptr = new Cryptr('kadence');
 const clientip = require("client-ip")
-const sgMail = require("@sendgrid/mail");
-const fs = require("fs");
-const ejs = require("ejs")
-sgMail.setApiKey(process.env.SG_KEY);
-
 exports.getRegister = (req,res) =>{
     res.render("register",{messages: req.flash('register')});
 }
@@ -155,7 +150,7 @@ exports.getIndex = (req,res) =>{
                             data:result3,
                             moment:moment,
                             session: session
-                        });   
+                        });
                     })
                 })
             }
@@ -210,40 +205,15 @@ exports.postSuggestionBox = (req,res) =>{
     if (req.session.loggedin==true){
         const user = req.session.user[0].id;
         const datetime = moment().format("YYYY-MM-DD HH:mm:ss");
+        const sdate = 'SELECT user_id, email FROM `user` WHERE user_id=?';
         const mind = req.body.mind;
         const wish = req.body.wish;
         const anonymous = req.body.anonymous === 'on' ? 1 : 0;
 
         const save = ({user_id: user, mind: mind, wish: wish, anonymous: anonymous, suggestion_date: datetime})
         const sql = "INSERT INTO suggestion set ?";
-
-        const sql1 = 'SELECT Email FROM `user` WHERE id=?';
-        db.query(sql1, [ user],(err1,result1)=>{
-            db.query(sql, [ save ],(err,result)=>{
-                var template = fs.readFileSync(
-                    "./views/email/template.ejs",
-                    "utf-8"
-                )
-                var html = ejs.render(template, {
-                    email: result1[0].Email
-                })
-                const sender = "Kadence Indonesia <idapps@kadence.com>";
-                const msg = {
-                    to: 'rmalem@kadence.com',
-                    from: sender,
-                    templateId: process.env.SUGGESTION_TEMPLATE,
-                    subject: "Test",
-                    html: html
-                };
-                sgMail.sendMultiple(msg, (error, result) => {
-                    if(error){
-                        console.log(error)
-                        res.redirect('/absen/suggestion-box');
-                    }else{
-                        res.redirect('/absen/');   
-                    }
-                });
-            });
+        db.query(sql ,[save],(err,results)=>{
+            res.redirect('/absen/');
         });
         
     }else{
@@ -261,7 +231,6 @@ exports.postClockIn = (req,res) =>{
         let date = moment().format('YYYY-MM-DD');
         let sdate = 'SELECT user_id,date FROM `absensi` WHERE date=? AND user_id=?';
         db.query(sdate,[now,user],(err2,result2)=>{
-            let sql1 = "UPDATE `absensi` SET clockin=?,hostname=?,worktype=? WHERE user_id=? AND date=?";
             db.query(sql1,[now,hostname,worktype,user,date],(err,result)=>{
                 res.redirect('/absen/');
             });

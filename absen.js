@@ -8,7 +8,7 @@ const flash = require("connect-flash");
 const userAgent = require("express-useragent")
 require("dotenv").config()
 global.baseurl = function(){
-	var url = "http://survey.kadence.co.id:"+process.env.PORT+"/";
+	var url = `http://${process.env.HOST}:${process.env.PORT}/`;
     return url;
 }
 
@@ -24,7 +24,7 @@ app.use(session({
     resave: false,
     saveUninitialized: false,
     cookie: {
-        expires: 600000
+        expires: 6000000000000
     },
     name: "Absen"
 }));
@@ -33,4 +33,5 @@ app.use(session({
 app.use('/absen/',IndexRoute)
 
 app.listen(process.env.PORT,()=>{
+    console.log(`running on ${process.env.HOST}:${process.env.PORT}`);
 })

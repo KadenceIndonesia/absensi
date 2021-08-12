@@ -59,6 +59,14 @@
             </div>
             <!-- <a href="/absen/logout" class="btn btn-info" style="color: #ffffff;">Logout</a> -->
         </nav>
+        <div class='container containerSelectionBox'>
+            <a href="/absen/">
+                <span class="selectionBox">Absensi</span>
+            </a>
+            <a href="/absen/suggestion-box/">
+                <span class="selectionBox">Suggestion Box</span>
+            </a>
+        </div>
         <div class="container">
             <div id="clock" class="light">
                 <b><%= moment(data[0].date).format("YYYY-MMMM-DD") %></b>
