@@ -160,6 +160,68 @@ exports.getIndex = (req,res) =>{
     }
 }
 
+exports.getSuggestionBox = (req, res) => {
+    if (req.session.loggedin==true){
+        var computer = computerName()
+        var session = req.session.user;
+        let user = req.session.user[0].id;
+        let now = new Date();
+        let date = moment().format('YYYY-MM-DD');
+        var browser = req.useragent.browser
+        var platform = req.useragent.platform
+        var os = req.useragent.os
+        var device = browser+" "+platform+" "+os
+        let sdate = 'SELECT user_id,date FROM `absensi` WHERE date=? AND user_id=?';
+        db.query(sdate,[date,user],(err2,result2)=>{
+            if (result2.length>0){
+                let sql1 = 'SELECT user_id, clockin,clockout,date FROM `absensi` WHERE date = ? AND user_id=?';
+                db.query(sql1,[date,user],(err,result)=>{
+                    res.render("suggestionbox",{
+                        data:result,
+                        moment:moment,
+                        session: session
+                    });
+                })
+            }else{
+                var saveabsensi = ({user_id: user, date: now, computer_name: computer, device: device})
+                db.query("INSERT INTO absensi set ?",[saveabsensi],(errs,results)=>{
+                    let sql2 = 'SELECT user_id, clockin,clockout,date FROM `absensi` WHERE date = ? AND user_id=?';
+                    db.query(sql2,[date,user],(err3,result3)=>{
+                        res.render("suggestionbox",{
+                            data:result3,
+                            moment:moment,
+                            session: session
+                        });
+                    })
+                })
+            }
+        })
+    }else{
+        res.redirect('/absen/login');
+    }
+}
+
+exports.postSuggestionBox = (req,res) =>{
+    if (req.session.loggedin==true){
+        const user = req.session.user[0].id;
+        const datetime = moment().format("YYYY-MM-DD HH:mm:ss");
+        const sdate = 'SELECT user_id, email FROM `user` WHERE user_id=?';
+        const mind = req.body.mind;
+        const wish = req.body.wish;
+        const anonymous = req.body.anonymous === 'on' ? 1 : 0;
+
+        const save = ({user_id: user, mind: mind, wish: wish, anonymous: anonymous, suggestion_date: datetime})
+        const sql = "INSERT INTO suggestion set ?";
+        db.query(sql ,[save],(err,results)=>{
+            res.redirect('/absen/');
+        });
+        
+    }else{
+        res.redirect('../login');
+    }
+    
+}
+
 exports.postClockIn = (req,res) =>{
     if (req.session.loggedin==true){
         let user = req.session.user[0].id;
@@ -169,7 +231,6 @@ exports.postClockIn = (req,res) =>{
         let date = moment().format('YYYY-MM-DD');
         let sdate = 'SELECT user_id,date FROM `absensi` WHERE date=? AND user_id=?';
         db.query(sdate,[now,user],(err2,result2)=>{
-            let sql1 = "UPDATE `absensi` SET clockin=?,hostname=?,worktype=? WHERE user_id=? AND date=?";
             db.query(sql1,[now,hostname,worktype,user,date],(err,result)=>{
                 res.redirect('/absen/');
             });

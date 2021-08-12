@@ -182,3 +182,30 @@ h3.nopad{
     -webkit-margin-end: 0;
     -webkit-padding-start: 0;
 }
+
+
+.selectionBox{
+    border-radius: 5px;
+    background: #e6b62e;
+    color: white;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+.formSuggestionBox{
+    margin-top: 100px;
+}
+
+.containerSelectionBox {
+    padding-top: 10px;
+}
+
+
+textarea{
+    resize: none;
+    min-width: 100%;
+}
