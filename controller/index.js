@@ -231,6 +231,7 @@ exports.postClockIn = (req,res) =>{
         let date = moment().format('YYYY-MM-DD');
         let sdate = 'SELECT user_id,date FROM `absensi` WHERE date=? AND user_id=?';
         db.query(sdate,[now,user],(err2,result2)=>{
+            let sql1 = "UPDATE `absensi` SET clockin=?,hostname=?,worktype=? WHERE user_id=? AND date=?";
             db.query(sql1,[now,hostname,worktype,user,date],(err,result)=>{
                 res.redirect('/absen/');
             });
