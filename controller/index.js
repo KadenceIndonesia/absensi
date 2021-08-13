@@ -5,6 +5,11 @@ const CryptoJs = require("crypto-js");
 const Cryptr = require("cryptr");
 const cryptr = new Cryptr('kadence');
 const clientip = require("client-ip")
+const sgMail = require("@sendgrid/mail");
+const fs = require("fs");
+const ejs = require("ejs")
+sgMail.setApiKey(process.env.SG_KEY);
+
 exports.getRegister = (req,res) =>{
     res.render("register",{messages: req.flash('register')});
 }
@@ -150,6 +155,47 @@ exports.getIndex = (req,res) =>{
                             data:result3,
                             moment:moment,
                             session: session
+                        });   
+                    })
+                })
+            }
+        })
+    }else{
+        res.redirect('/absen/login');
+    }
+}
+
+exports.getSuggestionBox = (req, res) => {
+    if (req.session.loggedin==true){
+        var computer = computerName()
+        var session = req.session.user;
+        let user = req.session.user[0].id;
+        let now = new Date();
+        let date = moment().format('YYYY-MM-DD');
+        var browser = req.useragent.browser
+        var platform = req.useragent.platform
+        var os = req.useragent.os
+        var device = browser+" "+platform+" "+os
+        let sdate = 'SELECT user_id,date FROM `absensi` WHERE date=? AND user_id=?';
+        db.query(sdate,[date,user],(err2,result2)=>{
+            if (result2.length>0){
+                let sql1 = 'SELECT user_id, clockin,clockout,date FROM `absensi` WHERE date = ? AND user_id=?';
+                db.query(sql1,[date,user],(err,result)=>{
+                    res.render("suggestionbox",{
+                        data:result,
+                        moment:moment,
+                        session: session
+                    });
+                })
+            }else{
+                var saveabsensi = ({user_id: user, date: now, computer_name: computer, device: device})
+                db.query("INSERT INTO absensi set ?",[saveabsensi],(errs,results)=>{
+                    let sql2 = 'SELECT user_id, clockin,clockout,date FROM `absensi` WHERE date = ? AND user_id=?';
+                    db.query(sql2,[date,user],(err3,result3)=>{
+                        res.render("suggestionbox",{
+                            data:result3,
+                            moment:moment,
+                            session: session
                         });
                     })
                 })
@@ -158,6 +204,52 @@ exports.getIndex = (req,res) =>{
     }else{
         res.redirect('/absen/login');
     }
+}
+
+exports.postSuggestionBox = (req,res) =>{
+    if (req.session.loggedin==true){
+        const user = req.session.user[0].id;
+        const datetime = moment().format("YYYY-MM-DD HH:mm:ss");
+        const mind = req.body.mind;
+        const wish = req.body.wish;
+        const anonymous = req.body.anonymous === 'on' ? 1 : 0;
+
+        const save = ({user_id: user, mind: mind, wish: wish, anonymous: anonymous, suggestion_date: datetime})
+        const sql = "INSERT INTO suggestion set ?";
+
+        const sql1 = 'SELECT Email FROM `user` WHERE id=?';
+        db.query(sql1, [ user],(err1,result1)=>{
+            db.query(sql, [ save ],(err,result)=>{
+                var template = fs.readFileSync(
+                    "./views/email/template.ejs",
+                    "utf-8"
+                )
+                var html = ejs.render(template, {
+                    email: result1[0].Email
+                })
+                const sender = "Kadence Indonesia <idapps@kadence.com>";
+                const msg = {
+                    to: 'rmalem@kadence.com',
+                    from: sender,
+                    templateId: process.env.SUGGESTION_TEMPLATE,
+                    subject: "Test",
+                    html: html
+                };
+                sgMail.sendMultiple(msg, (error, result) => {
+                    if(error){
+                        console.log(error)
+                        res.redirect('/absen/suggestion-box');
+                    }else{
+                        res.redirect('/absen/');   
+                    }
+                });
+            });
+        });
+        
+    }else{
+        res.redirect('../login');
+    }
+    
 }
 
 exports.postClockIn = (req,res) =>{
