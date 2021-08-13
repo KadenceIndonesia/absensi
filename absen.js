@@ -11,7 +11,7 @@ global.baseurl = function(){
 	return process.env.ENV === 'production' ?
         `http://survey.kadence.co.id:${process.env.PORT}/`
             :
-        `http://${process.env.HOST}:${process.env.PORT}/`;
+        `http://survey.kadence.co.id:${process.env.PORT}/`;
 }
 
 app.set("view engine","ejs")
