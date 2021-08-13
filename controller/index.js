@@ -226,7 +226,7 @@ exports.postSuggestionBox = (req,res) =>{
                 )
                 var html = ejs.render(template, {
                     email: anonymous ? 'anonymous@kadence.com' : result1[0].Email,
-                    suggestion: wish
+                    suggestion: [mind, wish]
                 })
                 const msg = {
                     to: process.env.SUGGESTION_SEND_TO.split(','),
