@@ -11,7 +11,7 @@ global.baseurl = function(){
 	return process.env.ENV === 'production' ?
         `http://survey.kadence.co.id:${process.env.PORT}/`
             :
-        `http://survey.kadence.co.id:${process.env.PORT}/`;
+        `http://${process.env.HOST}:${process.env.PORT}/`;
 }
 
 app.set("view engine","ejs")
@@ -34,6 +34,6 @@ app.use(session({
 
 app.use('/absen/',IndexRoute)
 
-app.listen(process.env.PORT, process.env.HOST, ()=>{
+app.listen(process.env.PORT, ()=>{
     console.log(`running on ${process.env.HOST}:${process.env.PORT}`);
 })
