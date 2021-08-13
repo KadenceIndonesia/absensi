@@ -8,8 +8,10 @@ const flash = require("connect-flash");
 const userAgent = require("express-useragent")
 require("dotenv").config()
 global.baseurl = function(){
-	var url = `http://${process.env.HOST}:${process.env.PORT}/`;
-    return url;
+	return process.env.ENV === 'production' ?
+        `http://survey.kadence.co.id:${process.env.PORT}/`
+            :
+        `http://${process.env.HOST}:${process.env.PORT}/`;
 }
 
 app.set("view engine","ejs")
@@ -32,6 +34,6 @@ app.use(session({
 
 app.use('/absen/',IndexRoute)
 
-app.listen(process.env.PORT,()=>{
+app.listen(process.env.PORT, process.env.HOST, ()=>{
     console.log(`running on ${process.env.HOST}:${process.env.PORT}`);
 })
