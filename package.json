@@ -27,11 +27,14 @@
         "node-xlsx": "^0.15.0",
         "nodemon": "^2.0.4",
         "passport": "^0.4.1",
-        "passport-google-oauth20": "^2.0.0"
+        "passport-google-oauth20": "^2.0.0",
+        "pm2": "^5.1.0"
     },
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
-        "start": "nodemon absen.js"
+        "start": "pm2 start absen.js --name 'absensi'",
+        "stop": "pm2 stop absen.js",
+        "restart": "pm2 restart absen.js"
     },
     "author": "",
     "license": "ISC"
