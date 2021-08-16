@@ -6,6 +6,8 @@ const Cryptr = require("cryptr");
 const cryptr = new Cryptr('kadence');
 const clientip = require("client-ip")
 const sgMail = require("@sendgrid/mail");
+const ejs = require("ejs");
+const fs = require("fs");
 sgMail.setApiKey(process.env.SG_KEY);
 
 exports.getRegister = (req,res) =>{
@@ -218,19 +220,33 @@ exports.postSuggestionBox = (req,res) =>{
         const sql1 = 'SELECT Email FROM `user` WHERE id=?';
         db.query(sql1, [ user],(err1,result1)=>{
             db.query(sql, [ save ],(err,result)=>{
+                var template = fs.readFileSync(
+                    "./views/email/template.ejs",
+                    "utf-8"
+                )
+                var html = ejs.render(template, {
+                    email: anonymous ? 'anonymous@kadence.com' : result1[0].Email,
+                    suggestion: [mind, wish]
+                })
                 const msg = {
                     to: process.env.SUGGESTION_SEND_TO.split(','),
-                    from: anonymous ? 'anonymous@kadence.com' : result1[0].Email,
-                    templateId: process.env.SUGGESTION_TEMPLATE,
-                    dynamic_template_data: {
-                        name: data.name,
-                        confirm_account_url:  data.confirm_account__url,
-                        reset_password_url: data.reset_password_url
-                    }
+                    from: anonymous ? 'Kadence User<anonymous@kadence.com>' : result1[0].Email,
+                    subject: "We Got Suggestion for you!",
+                    // templateId: process.env.SUGGESTION_TEMPLATE,
+                    // dynamic_template_data: {
+                    //     name: data.name,
+                    //     confirm_account_url:  data.confirm_account__url,
+                    //     reset_password_url: data.reset_password_url
+                    // }
+                    html: html
                 };
 
-                sgMail.send(msg, (error, result) => {
-                    res.redirect('/absen/');
+                sgMail.sendMultiple(msg, (error, result) => {
+                    if(error){
+                        console.log(error)
+                    }else{
+                        res.redirect('/absen/');
+                    }
                 });
             });
         });

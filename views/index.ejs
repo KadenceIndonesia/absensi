@@ -1,136 +1,83 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="<%= baseurl() %>css/style.css" />
-    <link rel="stylesheet" href="<%= baseurl() %>css/component.css" />
-    <link rel="stylesheet" href="<%= baseurl() %>plugin/timer/css/style.css" />
-    <link rel="stylesheet" href="<%= baseurl() %>plugin/timer/css/timer.css" />
-    <link
-      rel="stylesheet"
-      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
-      integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk"
-      crossorigin="anonymous"
-    />
-    <style>
-      .countup {
-        text-align: center;
-        margin-bottom: 20px;
-      }
-      .countup .timeel {
-        display: inline-block;
-        padding: 10px;
-        background: #151515;
-        margin: 0;
-        color: white;
-        min-width: 2.6rem;
-        margin-left: 13px;
-        border-radius: 10px 0 0 10px;
-      }
-      .countup span[class*="timeRef"] {
-        border-radius: 0 10px 10px 0;
-        margin-left: 0;
-        background: #e8c152;
-        color: black;
-      }
-    </style>
-
-    <title>Kadence Absensi</title>
-  </head>
-  <body>
-    <nav class="navbar navbar-dark bg-dark">
-      <a class="navbar-brand" href="/absen/">
-        <img
-          src="http://survey.kadence.co.id:3004/img/Logo_Clear.png"
-          width="30"
-          height="30"
-          class="d-inline-block align-top"
-          alt=""
-        />
-        Kadence Indonesia
-      </a>
-      <% if(data[0].clockin != '00:00:00' && data[0].clockout == '00:00:00') {
-      %> <% } %>
-      <div></div>
-      <div class="top-icon-menu desk delay">
-        <ul>
-          <li class="size-std option-click" onClick="clickToggle(profile)">
-            <img src="<%= baseurl() %>img/profile.png" />&nbsp;&nbsp;<%=
-            session[0].Email %>
-          </li>
-        </ul>
-      </div>
-      <div
-        class="option-box option-menu shadow half size-std desk"
-        id="profile"
-        style="display: none"
-      >
-        <ul class="nopad">
-          <li><a href="/absen/editpassword">Edit Password</a></li>
-          <li><a href="<%=  baseurl()%>absen/admin">Export</a></li>
-          <li style="border-top: 1px solid #f3eeee">
-            <a href="/absen/logout">Logout</a>
-          </li>
-        </ul>
-      </div>
-      <!-- <a href="/absen/logout" class="btn btn-info" style="color: #ffffff;">Logout</a> -->
-    </nav>
-    <div class="container containerSelectionBox">
-      <a href="/absen/">
-        <span class="selectionBox">Attendance</span>
-      </a>
-      <a href="/absen/suggestion-box/">
-        <span class="selectionBox">Suggestion Box</span>
-      </a>
-    </div>
-    <div class="container">
-      <div id="clock" class="light">
-        <b><%= moment(data[0].date).format("YYYY-MMMM-DD") %></b>
-        <div class="display">
-          <div class="weekdays"></div>
-          <div class="ampm"></div>
-          <div class="alarm"></div>
-          <div class="digits"></div>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="<%= baseurl() %>css/style.css">
+        <link rel="stylesheet" href="<%= baseurl() %>css/component.css">
+        <link rel="stylesheet" href="<%= baseurl() %>plugin/timer/css/style.css">
+        <link rel="stylesheet" href="<%= baseurl() %>plugin/timer/css/timer.css">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+        <style>
+            .countup {
+              text-align: center;
+              margin-bottom: 20px;
+            }
+            .countup .timeel {
+              display: inline-block;
+              padding: 10px;
+              background: #151515;
+              margin: 0;
+              color: white;
+              min-width: 2.6rem;
+              margin-left: 13px;
+              border-radius: 10px 0 0 10px;
+            }
+            .countup span[class*="timeRef"] {
+              border-radius: 0 10px 10px 0;
+              margin-left: 0;
+              background: #e8c152;
+              color: black;
+            }
+            </style>
+            
+        <title>Kadence Absensi</title>
+    </head>
+    <body>
+        <nav class="navbar navbar-dark bg-dark">
+            <a class="navbar-brand" href="/absen/">
+                <img src="http://survey.kadence.co.id:3004/img/Logo_Clear.png" width="30" height="30" class="d-inline-block align-top" alt="">
+                Kadence Indonesia
+            </a>
+            <% if(data[0].clockin != '00:00:00' && data[0].clockout == '00:00:00') { %>
+                
+            <% } %>
+            <div>
+            </div>
+            <div class="top-icon-menu desk delay">
+                <ul>
+                    <li class="size-std option-click" onClick="clickToggle(profile)"><img src="<%= baseurl() %>img/profile.png">&nbsp;&nbsp;<%= session[0].Email %></li>
+                </ul>
+                
+            </div>
+            <div class="option-box option-menu shadow half size-std desk" id="profile" style="display: none;">
+                <ul class="nopad">
+                    <li><a href="/absen/editpassword">Edit Password</a></li>
+                    <li><a href="<%=  baseurl()%>absen/admin">Export</a></li>
+                    <li style="border-top: 1px solid #f3eeee"><a href="/absen/logout">Logout</a></li>
+                </ul>
+            </div>
+            <!-- <a href="/absen/logout" class="btn btn-info" style="color: #ffffff;">Logout</a> -->
+        </nav>
+        <% if(session[0].is_admin==1){ %>
+        <div class='container containerSelectionBox'>
+            <a href="/absen/">
+                <span class="selectionBox">Absensi</span>
+            </a>
+            <a href="/absen/suggestion-box/">
+                <span class="selectionBox">Suggestion Box</span>
+            </a>
         </div>
-      </div>
-      <div class="button-holder">
-        <!-- <a class="button">Switch Theme</a> -->
-        <% if (data[0].clockin == '00:00:00' && data[0].clockout == '00:00:00'){
-        %>
-        <form action="/absen/clockIn/" method="POST">
-          <div
-            class="col"
-            style="
-              width: 30%;
-              position: absolute;
-              left: 0;
-              right: 0;
-              margin: auto;
-            "
-          >
-            <div style="width: 100%; float: left">
-              <p style="text-align: left">Pilih lokasi anda bekerja saat ini</p>
-              <div class="radiotype1">
-                <input
-                  type="radio"
-                  id="radio01"
-                  name="worktype"
-                  value="WFH"
-                  required
-                />
-                <label for="radio01" id="chartline"><span></span>Rumah</label>
-              </div>
-              <div class="radiotype1">
-                <input
-                  type="radio"
-                  id="radio02"
-                  name="worktype"
-                  value="WFO"
-                  required
-                />
-                <label for="radio02" id="chartline"><span></span>Kantor</label>
-              </div>
+        <% } %>
+        <div class="container">
+            <div id="clock" class="light">
+                <b><%= moment(data[0].date).format("YYYY-MMMM-DD") %></b>
+                <div class="display">
+                    <div class="weekdays"></div>
+                    <div class="ampm"></div>
+                    <div class="alarm"></div>
+                    <div class="digits"></div>
+                </div>
             </div>
             <input type="hidden" name="ipInput" id="ipInput" readonly />
             <button type="submit" class="btn btn-primary btnclockin" disabled>

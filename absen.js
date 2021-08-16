@@ -34,6 +34,6 @@ app.use(session({
 
 app.use('/absen/',IndexRoute)
 
-app.listen(process.env.PORT, process.env.HOST, ()=>{
+app.listen(process.env.PORT, ()=>{
     console.log(`running on ${process.env.HOST}:${process.env.PORT}`);
 })
