@@ -64,6 +64,35 @@
                             <input type="date" name="date_to" class="frm-std size-std" style="border-radius: 0;" required="">
                         </td>
                     </tr>
+                    <% if(session[0].is_admin==1){ %>
+                    <tr>
+                        <td style="text-align: right; width: 40%;"></td>
+                        <td>
+                            <div class="radiotype1">
+                                <input type="radio" id="radio01" name="type" value="attendance" required>
+                                <label for="radio01" id="chartline"><span></span>Attendance</label>
+                            </div>
+                            <div class="radiotype1">
+                                <input type="radio" id="radio02" name="type" value="suggestion" required>
+                                <label for="radio02" id="chartline"><span></span>Sugestion</label>
+                            </div>
+                        </td>
+                    </tr>
+                    <% }else{ %>
+                    <tr style="display: none">
+                        <td style="text-align: right; width: 40%;"></td>
+                        <td>
+                            <div class="radiotype1">
+                                <input type="radio" id="radio01" name="type" value="attendance" required checked>
+                                <label for="radio01" id="chartline"><span></span>Attendance</label>
+                            </div>
+                            <div class="radiotype1">
+                                <input type="radio" id="radio02" name="type" value="suggestion" required>
+                                <label for="radio02" id="chartline"><span></span>Sugestion</label>
+                            </div>
+                        </td>
+                    </tr>
+                    <% } %>
                     <tr>
                         <td colspan="2" align="center"><input type="submit" value="Export File" class="btn btn-primary"></td>
                     </tr>
