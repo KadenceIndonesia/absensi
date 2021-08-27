@@ -59,7 +59,6 @@
             </div>
             <!-- <a href="/absen/logout" class="btn btn-info" style="color: #ffffff;">Logout</a> -->
         </nav>
-        <% if(session[0].is_admin==1){ %>
         <div class='container containerSelectionBox'>
             <a href="/absen/">
                 <span class="selectionBox">Attendance</span>
@@ -68,7 +67,6 @@
                 <span class="selectionBox">Suggestion Box</span>
             </a>
         </div>
-        <% } %>
         <div class="container">
             <div id="clock" class="light">
                 <b><%= moment(data[0].date).format("YYYY-MMMM-DD") %></b>
