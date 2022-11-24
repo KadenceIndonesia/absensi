@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="<%= baseurl() %>css/style.css">
+        <link rel="stylesheet" href="<%= baseurl() %>css/mystyle.css">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+        <title>Kadence Absensi</title>
+    </head>
+    <body>
+        <nav class="navbar navbar-dark bg-dark">
+            <a class="navbar-brand" href="/absen/">
+                <img src="http://survey.kadence.co.id:3004/img/Logo_Clear.png" width="30" height="30" class="d-inline-block align-top" alt="">
+                Kadence Indonesia
+            </a>
+        </nav>
+        <div class="wrapper">
+           <div style='width: 100%; padding: 100px 10%; background-color: #3E8E28;'>
+                <h2 style="color: white;">
+                    Welcome to<br />Legal Portal
+                </h2>
+                <b style="color: #FFAD61;">
+                    PT KADENCE INTERNATIONAL
+                </b>
+           </div>
+           <div style='width: 100%; padding: 100px 10%; background-color: #0E4236;'>
+                <div class="column" style="width: 100%;">
+                    <div class="cols-6">
+                        <img src='<%= baseurl() %>img/background1.png' style="width: 100%;" />
+                    </div>
+                    <div class="cols-1" style="height: 10px;"></div>
+                    <div class="cols-5" style="color: white;">
+                        <b>
+                            LEGAL PORTAL
+                        </b>
+                        <h1>How To Request Legal Document?</h1>
+                        <table style="width: 100%;">
+                            <tr>
+                                <td align="center">
+                                    <div style="border-radius: 15px; background-color: #FFAD61; font-size: 30px; font-weight: bolder; margin: 20px 0; padding: 10px;">
+                                        1
+                                    </div>
+                                </td>
+                                <td style="font-size: 18px; padding-left: 20px; font-weight: bold;">
+                                    Select request legal document 
+                                </td>
+                            </tr>
+                            <tr>
+                                <td align="center">
+                                    <div style="border-radius: 15px; background-color: #FFAD61; font-size: 30px; font-weight: bolder; margin: 20px 0; padding: 10px;">
+                                        2
+                                    </div>
+                                </td>
+                                <td style="font-size: 18px; padding-left: 20px; font-weight: bold;">
+                                    Fill out the request form
+                                </td>
+                            </tr>
+                            <tr>
+                                <td align="center">
+                                    <div style="border-radius: 15px; background-color: #FFAD61; font-size: 30px; font-weight: bolder; margin: 20px 0; padding: 10px;">
+                                        3
+                                    </div>
+                                </td>
+                                <td style="font-size: 18px; padding-left: 20px; font-weight: bold;">
+                                    Email request to<br />
+                                    id_legal@kadence.com
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div style='width: 100%; padding: 100px 10%; color: #0E4236; text-align: center;'>
+                <p>
+                    <b>LEGAL PORTAL</b>
+                </p>
+                <h1>
+                    Please Select Request Legal Form
+                </h1>
+                <br />
+                <div class="column" style="color: #0E4236; text-align: left;">
+                    <div class="spccols-4 spc-tb" style="position: relative; height: 480px; background-size: cover; background-image: url('<%= baseurl() %>img/background2.jpeg'); border-radius: 24px;">
+                        <a href="https://tinyurl.com/Form-BAST" target="_blank" style="color: unset;">
+                            <div class="increase" style="position: absolute; bottom: 20px; border-radius: 12px; padding: 20px; left: 5%; background-color: white; width: 90%;">
+                                <h4><b>BAST</b></h4>
+                                <p class="nopad">Berita Acara Serah Terima</p>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="spccols-4 spc-tb" style="position: relative; height: 480px; background-size: cover; background-image: url('<%= baseurl() %>img/background3.jpeg'); border-radius: 24px;">
+                        <a href="https://docs.google.com/forms/d/1vLOQ-EEiFhAIuVmOFx2lyYSC2ovU_DOUy64F2q6jLOg/edit" target="_blank" style="color: unset;">
+                            <div class="increase" style="position: absolute; bottom: 20px; border-radius: 12px; padding: 20px; left: 5%; background-color: white; width: 90%;">
+                                <h4><b>AGREEMENT</b></h4>
+                                <p class="nopad">Perjanjian Kerjasama untuk mengikat antara Kadence dan Klien</p>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="spccols-4 spc-tb" style="position: relative; height: 480px; background-size: cover; background-image: url('<%= baseurl() %>img/background3.jpeg'); border-radius: 24px;">
+                        <div class="increase" style="position: absolute; bottom: 20px; border-radius: 12px; padding: 20px; left: 5%; background-color: white; width: 90%;">
+                            <h4><b>PC</b></h4>
+                            <p class="nopad">Project Confirmation</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+</html>

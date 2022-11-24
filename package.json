@@ -32,9 +32,9 @@
     },
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
-        "start": "pm2 start absen.js --name 'absensi'",
-        "stop": "pm2 stop absen.js",
-        "restart": "pm2 restart absen.js"
+        "start": "nodemon absen.js",
+        "stop": "pm2 stop absen.js --name 'absensi'",
+        "restart": "pm2 restart absen.js --name 'absensi'"
     },
     "author": "",
     "license": "ISC"

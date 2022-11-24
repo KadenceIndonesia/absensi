@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 const bodyparser = require('body-parser');
 const IndexRoute = require('./Routers/index');
+const LegalRoute = require('./Routers/legal');
 const session = require("express-session");
 const passport = require("passport");
 const flash = require("connect-flash");
@@ -33,6 +34,7 @@ app.use(session({
 
 
 app.use('/absen/',IndexRoute)
+app.use('/legal-portal/',LegalRoute)
 
 app.listen(process.env.PORT, ()=>{
     console.log(`running on ${process.env.HOST}:${process.env.PORT}`);
